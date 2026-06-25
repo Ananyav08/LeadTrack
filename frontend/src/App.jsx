@@ -54,138 +54,135 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] bg-gradient-to-tr from-[#0b0f19] via-[#111827] to-[#0d1527] text-slate-100 p-4 md:p-8 font-sans antialiased selection:bg-indigo-500/30">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div style={{ padding: '32px 16px' }} className="fade-in">
+      <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
         
-        {/* Advanced Glassmorphic Header */}
-        <header className="flex flex-col md:flex-row items-start md:items-center justify-between border-b border-slate-800 pb-6 gap-4">
+        {/* Header Block using .glass and .gradient-text */}
+        <header className="glass" style={{ padding: '24px', display: 'flex', justifyContent: 'between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
-            <h1 className="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              LeadTrack Engine
-            </h1>
-            <p className="text-sm text-slate-400 mt-1">Enterprise Automated Lead Acquisition & Real-Time Interaction Metrics</p>
+            <h1 className="gradient-text" style={{ fontSize: '32px', fontWeight: '800', trackingTight: '-0.5px' }}>LeadTrack Engine</h1>
+            <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>Automated Lead Management & Engagement Tracking Matrix</p>
           </div>
-          <div className="flex items-center gap-2.5 bg-slate-900/80 border border-slate-800 px-4 py-2 rounded-xl backdrop-blur-md shadow-inner">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="text-xs font-semibold tracking-wider text-slate-300 uppercase">Live Sandbox Active</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', padding: '8px 16px', borderRadius: '999px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: 'var(--accent-success)', animation: 'pulse 2s infinite' }}></span>
+            <span style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1px', textTransform: 'uppercase', color: 'var(--text-primary)' }}>Live Environment</span>
           </div>
         </header>
 
-        {/* Dashboard Split Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        {/* Form and Metrics Section */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           
-          {/* Capturing Module */}
-          <div className="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl shadow-xl backdrop-blur-md space-y-5">
+          {/* Form Card using .glass, .input-field and .btn-primary */}
+          <div className="glass" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2">
-                <span className="p-1.5 bg-indigo-500/10 rounded-lg text-indigo-400 text-sm">📥</span> Capture Inbound Pipeline
+              <h2 style={{ fontSize: '18px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <span style={{ color: 'var(--accent-1)' }}>📥</span> Capture Lead Entry
               </h2>
-              <p className="text-xs text-slate-500 mt-1">Inject variables into target databases via simulation routing protocols.</p>
+              <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '2px' }}>Ingest routing tokens dynamically into client datasets.</p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input type="text" placeholder="Full Name" required className="w-full px-4 py-2.5 bg-slate-950/60 border border-slate-800/80 rounded-xl text-slate-100 placeholder-slate-600 focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent outline-none transition-all font-medium text-sm" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-              <input type="email" placeholder="Email Address" required className="w-full px-4 py-2.5 bg-slate-950/60 border border-slate-800/80 rounded-xl text-slate-100 placeholder-slate-600 focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent outline-none transition-all font-medium text-sm" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" placeholder="Full Name" required className="input-field" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
+              <input type="email" placeholder="Email Address" required className="input-field" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
+              <input type="text" placeholder="Phone Number" required className="input-field" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
+              <input type="text" placeholder="Company Name (Optional)" className="input-field" value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} />
+              <textarea placeholder="Requirement / Operational Scope Description..." required className="input-field" style={{ height: '90px', resize: 'none' }} value={formData.requirement} onChange={e => setFormData({ ...formData, requirement: e.target.value })} />
               
-              <div className="grid grid-cols-2 gap-3">
-                <input type="text" placeholder="Phone Number" required className="w-full px-4 py-2.5 bg-slate-950/60 border border-slate-800/80 rounded-xl text-slate-100 placeholder-slate-600 focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent outline-none transition-all font-medium text-sm" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
-                <input type="text" placeholder="Company" className="w-full px-4 py-2.5 bg-slate-950/60 border border-slate-800/80 rounded-xl text-slate-100 placeholder-slate-600 focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent outline-none transition-all font-medium text-sm" value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} />
-              </div>
-
-              <textarea placeholder="Requirement Details / Operational Scope..." required className="w-full px-4 py-2.5 bg-slate-950/60 border border-slate-800/80 rounded-xl text-slate-100 placeholder-slate-600 h-24 resize-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent outline-none transition-all font-medium text-sm" value={formData.requirement} onChange={e => setFormData({ ...formData, requirement: e.target.value })} />
-              
-              <button type="submit" className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold py-2.5 rounded-xl transition-all shadow-lg shadow-indigo-600/10 active:scale-[0.99]">
-                Execute Ingestion Route
+              <button type="submit" className="btn-primary" style={{ marginTop: '4px' }}>
+                Execute Pipeline Route
               </button>
             </form>
 
             {msg && (
-              <div className="p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs rounded-xl font-medium animate-pulse">
+              <div style={{ padding: '12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', color: 'var(--accent-success)', fontSize: '12px', borderRadius: '10px', fontWeight: '500' }}>
                 {msg}
               </div>
             )}
           </div>
 
-          {/* Premium Analytics Metric Display */}
-          <div className="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {/* Metrics Column containing 6 explicit .stat-card layers */}
+          <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
             {[
-              { label: 'Total Database Entries', value: stats.totalLeads, icon: '👥', color: 'border-l-blue-500 bg-blue-500/5 text-blue-400' },
-              { label: 'Tracking Mail Transmitted', value: stats.emailsSent, icon: '✉️', color: 'border-l-purple-500 bg-purple-500/5 text-purple-400' },
-              { label: 'Verified Pixel Opens', value: stats.emailsOpened, icon: '👁️', color: 'border-l-amber-500 bg-amber-500/5 text-amber-400' },
-              { label: 'System Redirect Clicks', value: stats.linksClicked, icon: '🔗', color: 'border-l-emerald-500 bg-emerald-500/5 text-emerald-400' },
-              { label: 'Composite Open Rate', value: stats.openRate, icon: '📊', color: 'border-l-pink-500 bg-pink-500/5 text-pink-400' },
-              { label: 'Action Conversion Rate', value: stats.clickRate, icon: '📈', color: 'border-l-cyan-500 bg-cyan-500/5 text-cyan-400' }
-            ].map((item, idx) => (
-              <div key={idx} className={`bg-slate-900/40 border-l-4 border-y border-r border-slate-800/80 ${item.color.split(' ')[0]} p-5 rounded-xl shadow-lg flex flex-col justify-between transition-all duration-300 hover:-translate-y-0.5`}>
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">{item.label}</span>
-                  <span className="text-sm opacity-80">{item.icon}</span>
+              { label: 'Total Leads Captured', val: stats.totalLeads, icon: '👥', border: 'var(--accent-1)' },
+              { label: 'Automated Emails Sent', val: stats.emailsSent, icon: '✉️', border: 'var(--accent-2)' },
+              { label: 'Verified Email Opens', val: stats.emailsOpened, icon: '👁️', border: 'var(--accent-warning)' },
+              { label: 'Trackable Link Clicks', val: stats.linksClicked, icon: '🔗', border: 'var(--accent-success)' },
+              { label: 'Global Open Rate', val: stats.openRate, icon: '📊', border: 'var(--accent-3)' },
+              { label: 'Global Click Rate', val: stats.clickRate, icon: '📈', border: 'rgba(244, 63, 94, 1)' }
+            ].map((card, i) => (
+              <div key={i} className="glass stat-card" style={{ borderLeft: `4px solid ${card.border}`, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '130px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
+                  <span style={{ fontSize: '11px', fontWeight: '700', tracking: '0.5px', textTransform: 'uppercase', color: 'var(--text-muted)' }}>{card.label}</span>
+                  <span style={{ fontSize: '16px' }}>{card.icon}</span>
                 </div>
-                <div className="text-3xl font-black tracking-tight mt-4 text-slate-100">{item.value}</div>
+                <span style={{ fontSize: '36px', fontWeight: '800', color: 'var(--text-primary)', trackingTight: '-1px' }}>{card.val}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Refactored Live Registry Board */}
-        <div className="bg-slate-900/40 border border-slate-800 rounded-2xl shadow-2xl backdrop-blur-md overflow-hidden">
-          <div className="p-6 border-b border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Database Logs Section using .glass and customized native alignment rules */}
+        <div className="glass" style={{ overflowX: 'auto', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ padding: '24px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
             <div>
-              <h2 className="text-lg font-bold text-slate-100">Relational Log Monitor</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Simulate interaction lifecycle events by triggering endpoint calls.</p>
+              <h2 style={{ fontSize: '18px', fontWeight: '700' }}>Relational Log Monitor</h2>
+              <p style={{ color: 'var(--text-muted)', fontSize: '12px', marginTop: '2px' }}>Simulate receipt interactions to trigger live database hooks.</p>
             </div>
-            <span className="text-xs font-semibold bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-xl text-indigo-400">
-              Active Logs: {leads.length} Records
+            <span style={{ fontSize: '12px', fontWeight: '600', padding: '6px 14px', background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border)', borderRadius: '8px' }}>
+              Active Records: {leads.length}
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-950/60 border-b border-slate-800">
-                <tr>
-                  <th className="py-3 px-4">Entity Metadata</th>
-                  <th className="py-3 px-4">Intent & Requirements</th>
-                  <th className="py-3 px-4 text-center">Open Vector</th>
-                  <th className="py-3 px-4 text-center">Click Vector</th>
-                  <th className="py-3 px-4 text-right">Simulation Switches</th>
+          <div style={{ width: '100%', overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid var(--border)', background: 'rgba(255,255,255,0.01)' }}>
+                  <th style={{ padding: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', tracking: '0.5px' }}>Lead Metadata</th>
+                  <th style={{ padding: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', tracking: '0.5px' }}>Project Scope</th>
+                  <th style={{ padding: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', tracking: '0.5px', textAlign: 'center' }}>Open Vector</th>
+                  <th style={{ padding: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', tracking: '0.5px', textAlign: 'center' }}>Click Vector</th>
+                  <th style={{ padding: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-muted)', tracking: '0.5px', textAlign: 'right' }}>Interactive Testing Switches</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/50">
-                {leads.map(lead => (
-                  <tr key={lead.id} className="hover:bg-slate-800/20 transition-colors duration-150 group">
-                    <td className="py-4 px-4">
-                      <div className="font-bold text-slate-100 group-hover:text-indigo-400 transition-colors">{lead.name}</div>
-                      <div className="text-xs text-slate-400 font-medium mt-0.5">{lead.email}</div>
-                      <div className="text-[10px] text-slate-600 font-mono mt-1">{lead.timestamp}</div>
+              <tbody style={{ verticalAlign: 'middle' }}>
+                {leads.map((l) => (
+                  <tr key={l.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.03)', background: 'transparent' }} onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.01)'} onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}>
+                    <td style={{ padding: '16px' }}>
+                      <div style={{ fontWeight: '700', color: 'var(--text-primary)' }}>{l.name}</div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '2px' }}>{l.email} · {l.phone}</div>
+                      <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace', marginTop: '4px' }}>{l.timestamp}</div>
                     </td>
-                    <td className="py-4 px-4 max-w-xs">
-                      <div className="text-slate-300 text-xs font-medium line-clamp-2">"{lead.requirement}"</div>
-                      {lead.company && (
-                        <span className="text-[9px] font-bold tracking-wide uppercase bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded-md mt-1.5 inline-block">
-                          🏢 {lead.company}
+                    <td style={{ padding: '16px', maxWidth: '240px' }}>
+                      <div style={{ fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--text-primary)' }}>"{l.requirement}"</div>
+                      {l.company && (
+                        <span style={{ fontSize: '9px', fontWeight: '700', letterSpacing: '0.3px', textTransform: 'uppercase', background: 'rgba(99, 102, 241, 0.1)', border: '1px solid rgba(99, 102, 241, 0.2)', padding: '2px 6px', borderRadius: '4px', color: '#a78bfa', marginTop: '6px', display: 'inline-block' }}>
+                          🏢 {l.company}
                         </span>
                       )}
                     </td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold tracking-wide border transition-all ${lead.opened ? 'bg-amber-500/10 border-amber-500/20 text-amber-400 shadow-sm shadow-amber-500/5' : 'bg-slate-950 border-slate-800 text-slate-600'}`}>
-                        {lead.opened ? '⚠️ Opened' : 'Unread'}
+                    <td style={{ padding: '16px', textAlign: 'center' }}>
+                      <span style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', tracking: '0.3px', border: '1px solid',
+                        background: l.opened ? 'rgba(245, 158, 11, 0.08)' : 'rgba(255,255,255,0.02)',
+                        borderColor: l.opened ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255,255,255,0.05)',
+                        color: l.opened ? 'var(--accent-warning)' : 'var(--text-muted)' }}>
+                        {l.opened ? '⚠️ Opened' : 'Unread'}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-center">
-                      <span className={`px-2.5 py-1 rounded-lg text-xs font-bold tracking-wide border transition-all ${lead.clicked ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400 shadow-sm shadow-emerald-500/5' : 'bg-slate-950 border-slate-800 text-slate-600'}`}>
-                        {lead.clicked ? '✅ Clicked' : 'No Action'}
+                    <td style={{ padding: '16px', textAlign: 'center' }}>
+                      <span style={{ display: 'inline-block', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '700', tracking: '0.3px', border: '1px solid',
+                        background: l.clicked ? 'rgba(16, 185, 129, 0.08)' : 'rgba(255,255,255,0.02)',
+                        borderColor: l.clicked ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
+                        color: l.clicked ? 'var(--accent-success)' : 'var(--text-muted)' }}>
+                        {l.clicked ? '✅ Clicked' : 'No Click'}
                       </span>
                     </td>
-                    <td className="py-4 px-4 text-right">
-                      <div className="flex justify-end gap-2">
-                        <button onClick={() => simulateOpen(lead.id)} disabled={lead.opened} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${lead.opened ? 'bg-slate-950 border border-slate-900 text-slate-700 cursor-not-allowed' : 'bg-amber-600 hover:bg-amber-500 text-white shadow-md active:scale-[0.96]'}`}>
-                          {lead.opened ? 'Verified' : 'Sim Pixel'}
+                    <td style={{ padding: '16px', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', justifyContent: 'end', gap: '8px' }}>
+                        <button onClick={() => simulateOpen(l.id)} disabled={l.opened} className="btn-primary" style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '6px', background: l.opened ? 'rgba(255,255,255,0.03)' : 'linear-gradient(135deg, #f59e0b, #d97706)', boxShadow: l.opened ? 'none' : '0 2px 10px rgba(245, 158, 11, 0.2)' }}>
+                          {l.opened ? 'Opened ✓' : 'Sim Pixel'}
                         </button>
-                        <button onClick={() => simulateClick(lead.id)} disabled={lead.clicked} className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${lead.clicked ? 'bg-slate-950 border border-slate-900 text-slate-700 cursor-not-allowed' : 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-md active:scale-[0.96]'}`}>
-                          {lead.clicked ? 'Recorded' : 'Sim Redirect'}
+                        <button onClick={() => simulateClick(l.id)} disabled={l.clicked} className="btn-primary" style={{ padding: '6px 12px', fontSize: '12px', borderRadius: '6px', background: l.clicked ? 'rgba(255,255,255,0.03)' : 'linear-gradient(135deg, #10b981, #059669)', boxShadow: l.clicked ? 'none' : '0 2px 10px rgba(16, 185, 129, 0.2)' }}>
+                          {l.clicked ? 'Clicked ✓' : 'Sim Link'}
                         </button>
                       </div>
                     </td>
@@ -195,6 +192,7 @@ export default function App() {
             </table>
           </div>
         </div>
+
       </div>
     </div>
   );
