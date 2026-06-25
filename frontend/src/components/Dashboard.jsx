@@ -59,6 +59,8 @@ function StatCard({ card, value, delay }) {
         background: card.grad,
         boxShadow: `0 8px 32px ${card.shadow}`,
         animationDelay: `${delay}s`,
+        padding: '24px 20px',
+        borderRadius: '16px',
       }}
     >
       <div style={{ fontSize: 32, marginBottom: 12 }}>{card.icon}</div>
@@ -83,7 +85,7 @@ function StatusBadge({ value, label, color }) {
       <span style={{
         width: 6, height: 6, borderRadius: '50%', background: color,
         boxShadow: `0 0 6px ${color}`,
-      }}/>
+      }} />
       {label}
     </span>
   )
@@ -98,28 +100,28 @@ function LeadRow({ lead, index }) {
       <td style={td}>{lead.id}</td>
       <td style={{ ...td, fontWeight: 600, color: '#e2e8f0' }}>{lead.name}</td>
       <td style={{ ...td, color: '#a5b4fc' }}>{lead.email}</td>
-      <td style={td}>{lead.company || <span style={{ color:'#475569' }}>—</span>}</td>
+      <td style={td}>{lead.company || <span style={{ color: '#475569' }}>—</span>}</td>
       <td style={{ ...td, maxWidth: 180 }}>
-        <span style={{ color:'#94a3b8', fontSize:13 }}>
+        <span style={{ color: '#94a3b8', fontSize: 13 }}>
           {lead.requirement
             ? lead.requirement.slice(0, 50) + (lead.requirement.length > 50 ? '…' : '')
-            : <span style={{ color:'#475569' }}>—</span>
+            : <span style={{ color: '#475569' }}>—</span>
           }
         </span>
       </td>
       <td style={td}>
         {lead.is_opened
-          ? <StatusBadge color="#10b981" label="Opened"/>
-          : <StatusBadge color="#64748b" label="Pending"/>
+          ? <StatusBadge color="#10b981" label="Opened" />
+          : <StatusBadge color="#64748b" label="Pending" />
         }
       </td>
       <td style={td}>
         {lead.is_clicked
-          ? <StatusBadge color="#6366f1" label="Clicked"/>
-          : <StatusBadge color="#64748b" label="No"/>
+          ? <StatusBadge color="#6366f1" label="Clicked" />
+          : <StatusBadge color="#64748b" label="No" />
         }
       </td>
-      <td style={{ ...td, color:'#64748b', fontSize:12 }}>{formatted}</td>
+      <td style={{ ...td, color: '#64748b', fontSize: 12 }}>{formatted}</td>
     </tr>
   )
 }
@@ -147,14 +149,16 @@ const th = {
 export default function Dashboard({ data, loading, onRefresh }) {
   if (loading) {
     return (
-      <div style={{ display:'flex', flexDirection:'column', alignItems:'center',
-                    justifyContent:'center', minHeight:'60vh', gap:16 }}>
+      <div style={{
+        display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', minHeight: '60vh', gap: 16
+      }}>
         <div className="spin" style={{
-          width:48, height:48, borderRadius:'50%',
-          border:'3px solid rgba(99,102,241,0.2)',
-          borderTopColor:'#6366f1',
-        }}/>
-        <p style={{ color:'#94a3b8' }}>Loading analytics…</p>
+          width: 48, height: 48, borderRadius: '50%',
+          border: '3px solid rgba(99,102,241,0.2)',
+          borderTopColor: '#6366f1',
+        }} />
+        <p style={{ color: '#94a3b8' }}>Loading analytics…</p>
       </div>
     )
   }
@@ -163,15 +167,23 @@ export default function Dashboard({ data, loading, onRefresh }) {
 
   return (
     <div style={{ padding: '48px 24px', maxWidth: 1280, margin: '0 auto' }}>
+
       {/* Page heading */}
-      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center',
-                    marginBottom: 36, flexWrap:'wrap', gap:12 }}
-           className="fade-in">
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 24,
+        marginBottom: 48,
+        flexWrap: 'wrap',
+        gap: 12
+      }}
+        className="fade-in">
         <div>
-          <h1 className="gradient-text" style={{ fontSize:30, fontWeight:800 }}>
+          <h1 className="gradient-text" style={{ fontSize: 30, fontWeight: 800 }}>
             Analytics Dashboard
           </h1>
-          <p style={{ color:'#64748b', fontSize:14, marginTop:4 }}>
+          <p style={{ color: '#64748b', fontSize: 14, marginTop: 4 }}>
             Real-time lead & email tracking overview
           </p>
         </div>
@@ -179,50 +191,52 @@ export default function Dashboard({ data, loading, onRefresh }) {
           id="refresh-btn"
           className="btn-primary"
           onClick={onRefresh}
-          style={{ padding:'10px 22px', fontSize:14 }}
+          style={{ padding: '10px 22px', fontSize: 14 }}
         >
           🔄 Refresh
         </button>
       </div>
 
-      {/* Stat cards */}
+      {/* Stat cards matrix layout container */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit,minmax(180px,1fr))',
-        gap: 20,
-        marginBottom: 40,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+        gap: 24,
+        marginBottom: 48,
       }}>
         {CARDS.map((c, i) => (
           <StatCard key={c.id} card={c} value={data[c.id]} delay={i * 0.07} />
         ))}
       </div>
 
-      {/* Leads table */}
-      <div className="glass fade-in" style={{ animationDelay:'0.4s', overflow:'hidden' }}>
-        <div style={{ padding:'20px 24px', borderBottom:'1px solid rgba(99,102,241,0.15)',
-                      display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-          <h2 style={{ fontWeight:700, fontSize:17 }}>
+      {/* Leads table wrapper */}
+      <div className="glass fade-in" style={{ animationDelay: '0.4s', overflow: 'hidden', borderRadius: '16px' }}>
+        <div style={{
+          padding: '20px 24px', borderBottom: '1px solid rgba(99,102,241,0.15)',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+        }}>
+          <h2 style={{ fontWeight: 700, fontSize: 17 }}>
             All Leads
             <span style={{
-              marginLeft:10, background:'rgba(99,102,241,0.2)',
-              color:'#a5b4fc', borderRadius:999, padding:'2px 10px', fontSize:13
+              marginLeft: 10, background: 'rgba(99,102,241,0.2)',
+              color: '#a5b4fc', borderRadius: 999, padding: '2px 10px', fontSize: 13
             }}>
               {data.leads?.length ?? 0}
             </span>
           </h2>
         </div>
 
-        <div style={{ overflowX:'auto' }}>
+        <div style={{ overflowX: 'auto' }}>
           {!data.leads?.length ? (
-            <div style={{ padding:60, textAlign:'center', color:'#475569' }}>
-              <div style={{ fontSize:48, marginBottom:12 }}>📭</div>
+            <div style={{ padding: 60, textAlign: 'center', color: '#475569' }}>
+              <div style={{ fontSize: 48, marginBottom: 12 }}>📭</div>
               <p>No leads yet. Submit the form to get started!</p>
             </div>
           ) : (
-            <table style={{ width:'100%', borderCollapse:'collapse' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
               <thead>
-                <tr style={{ background:'rgba(0,0,0,0.2)' }}>
-                  {['ID','Name','Email','Company','Requirement','Opened','Clicked','Timestamp'].map(h => (
+                <tr style={{ background: 'rgba(0,0,0,0.2)' }}>
+                  {['ID', 'Name', 'Email', 'Company', 'Requirement', 'Opened', 'Clicked', 'Timestamp'].map(h => (
                     <th key={h} style={th}>{h}</th>
                   ))}
                 </tr>
