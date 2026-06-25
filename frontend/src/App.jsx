@@ -4,8 +4,8 @@ export default function App() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', company: '', requirement: '' });
   const [msg, setMsg] = useState('');
   
-  // Custom Configuration: Define the active outbound sender email identity
-  const [senderEmail, setSenderEmail] = useState('dispatch@cognicare.ai');
+  // Custom Configuration: Updated to match your project name 'LeadTrack'
+  const [senderEmail, setSenderEmail] = useState('dispatch@leadtrack.io');
 
   const [leads, setLeads] = useState([
     { id: 1, name: 'Rahul Sharma', email: 'rahul@gmail.com', phone: '9876543210', company: 'ABC Pvt Ltd', requirement: 'Need AI automation integration', timestamp: '2026-06-25 15:12:04', opened: true, clicked: false },
@@ -44,7 +44,6 @@ export default function App() {
     };
     setLeads([newLead, ...leads]);
     
-    // Explicit system feedback referencing the authenticated sender profile block
     setMsg(`✅ Inbound route executed. Tracking sequence dispatched via secure relay: ${senderEmail}`);
     setFormData({ name: '', email: '', phone: '', company: '', requirement: '' });
     setTimeout(() => setMsg(''), 5000);
@@ -77,13 +76,13 @@ export default function App() {
         {/* Form and Metrics Section */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           
-          {/* Form Card with Injected Sender Configuration Box */}
+          {/* Form Card */}
           <div className="glass" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
             
-            {/* Sender Email Global Selector Block */}
+            {/* Sender Email Global Selector Block - Simplified Labels */}
             <div style={{ background: 'rgba(99, 102, 241, 0.04)', border: '1px solid var(--border)', padding: '14px', borderRadius: '12px' }}>
               <label style={{ fontSize: '11px', fontWeight: '700', color: '#a78bfa', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>
-                ⚙️ SMTP Outbound Sender Identity
+                ⚙️ Outbound Sender Email Config
               </label>
               <select 
                 value={senderEmail} 
@@ -91,9 +90,9 @@ export default function App() {
                 className="input-field"
                 style={{ padding: '10px 12px', fontSize: '13px', cursor: 'pointer', fontWeight: '600', color: 'var(--text-primary)' }}
               >
-                <option value="dispatch@cognicare.ai" style={{ background: 'var(--bg-card)' }}>dispatch@cognicare.ai (System Master)</option>
-                <option value="sales@cognicare.ai" style={{ background: 'var(--bg-card)' }}>sales@cognicare.ai (Growth Desk)</option>
-                <option value="no-reply@cognicare.ai" style={{ background: 'var(--bg-card)' }}>no-reply@cognicare.ai (Automation Core)</option>
+                <option value="dispatch@leadtrack.io" style={{ background: 'var(--bg-card)' }}>dispatch@leadtrack.io (System System)</option>
+                <option value="sales@leadtrack.io" style={{ background: 'var(--bg-card)' }}>sales@leadtrack.io (Sales Desk)</option>
+                <option value="no-reply@leadtrack.io" style={{ background: 'var(--bg-card)' }}>no-reply@leadtrack.io (Automated Bot)</option>
               </select>
             </div>
 
@@ -146,7 +145,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Database Logs Section using .glass and customized native alignment rules */}
+        {/* Database Logs Section */}
         <div className="glass" style={{ overflowX: 'auto', display: 'flex', flexDirection: 'column' }}>
           <div style={{ padding: '24px', borderBottom: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
             <div>
