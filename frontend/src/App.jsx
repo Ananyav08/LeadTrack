@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 export default function App() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', company: '', requirement: '' });
   const [msg, setMsg] = useState('');
+  
+  // Custom Configuration: Define the active outbound sender email identity
+  const [senderEmail, setSenderEmail] = useState('dispatch@cognicare.ai');
 
   const [leads, setLeads] = useState([
     { id: 1, name: 'Rahul Sharma', email: 'rahul@gmail.com', phone: '9876543210', company: 'ABC Pvt Ltd', requirement: 'Need AI automation integration', timestamp: '2026-06-25 15:12:04', opened: true, clicked: false },
@@ -40,9 +43,11 @@ export default function App() {
       clicked: false
     };
     setLeads([newLead, ...leads]);
-    setMsg(`✅ System captured lead entry successfully.`);
+    
+    // Explicit system feedback referencing the authenticated sender profile block
+    setMsg(`✅ Inbound route executed. Tracking sequence dispatched via secure relay: ${senderEmail}`);
     setFormData({ name: '', email: '', phone: '', company: '', requirement: '' });
-    setTimeout(() => setMsg(''), 4000);
+    setTimeout(() => setMsg(''), 5000);
   };
 
   const simulateOpen = (id) => {
@@ -58,7 +63,7 @@ export default function App() {
       <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
         
         {/* Header Block using .glass and .gradient-text */}
-        <header className="glass" style={{ padding: '24px', display: 'flex', justifyContent: 'between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+        <header className="glass" style={{ padding: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div>
             <h1 className="gradient-text" style={{ fontSize: '32px', fontWeight: '800', trackingTight: '-0.5px' }}>LeadTrack Engine</h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '14px', marginTop: '4px' }}>Automated Lead Management & Engagement Tracking Matrix</p>
@@ -72,8 +77,28 @@ export default function App() {
         {/* Form and Metrics Section */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
           
-          {/* Form Card using .glass, .input-field and .btn-primary */}
+          {/* Form Card with Injected Sender Configuration Box */}
           <div className="glass" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            
+            {/* Sender Email Global Selector Block */}
+            <div style={{ background: 'rgba(99, 102, 241, 0.04)', border: '1px solid var(--border)', padding: '14px', borderRadius: '12px' }}>
+              <label style={{ fontSize: '11px', fontWeight: '700', color: '#a78bfa', textTransform: 'uppercase', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>
+                ⚙️ SMTP Outbound Sender Identity
+              </label>
+              <select 
+                value={senderEmail} 
+                onChange={(e) => setSenderEmail(e.target.value)}
+                className="input-field"
+                style={{ padding: '10px 12px', fontSize: '13px', cursor: 'pointer', fontWeight: '600', color: 'var(--text-primary)' }}
+              >
+                <option value="dispatch@cognicare.ai" style={{ background: 'var(--bg-card)' }}>dispatch@cognicare.ai (System Master)</option>
+                <option value="sales@cognicare.ai" style={{ background: 'var(--bg-card)' }}>sales@cognicare.ai (Growth Desk)</option>
+                <option value="no-reply@cognicare.ai" style={{ background: 'var(--bg-card)' }}>no-reply@cognicare.ai (Automation Core)</option>
+              </select>
+            </div>
+
+            <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.06)' }} />
+
             <div>
               <h2 style={{ fontSize: '18px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <span style={{ color: 'var(--accent-1)' }}>📥</span> Capture Lead Entry
@@ -94,7 +119,7 @@ export default function App() {
             </form>
 
             {msg && (
-              <div style={{ padding: '12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', color: 'var(--accent-success)', fontSize: '12px', borderRadius: '10px', fontWeight: '500' }}>
+              <div style={{ padding: '12px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', color: 'var(--accent-success)', fontSize: '12px', borderRadius: '10px', fontWeight: '500', lineHeight: '1.4' }}>
                 {msg}
               </div>
             )}
