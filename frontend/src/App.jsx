@@ -116,25 +116,24 @@ function Navbar({ active, setActive, onTabClick }) {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "border-b border-white/[0.06]" : ""
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled ? "border-b border-white/[0.06]" : ""
+      }`}
       style={{
         background: scrolled ? "rgba(2,6,23,0.85)" : "transparent",
         backdropFilter: scrolled ? "blur(20px)" : "none",
       }}
     >
       <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center justify-between gap-6">
-        {/* Brand */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <div className="w-8 h-8 rounded-xl flex items-center justify-center"
             style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6)" }}>
             <Zap className="w-4 h-4 text-white" />
           </div>
           <span className="font-semibold text-white tracking-tight text-lg">LeadTrack</span>
-
+          <span className="hidden sm:inline text-[10px] font-medium px-2 py-0.5 rounded-full border border-blue-500/30 text-blue-400 bg-blue-500/10">AI</span>
         </div>
 
-        {/* Tabs with sliding pill */}
         <div className="hidden md:flex items-center gap-1 bg-white/[0.04] rounded-xl border border-white/[0.06] p-1 relative">
           {NAV_TABS.map((t) => (
             <button
@@ -146,8 +145,9 @@ function Navbar({ active, setActive, onTabClick }) {
               }}
               onMouseEnter={() => setHoveredTab(t)}
               onMouseLeave={() => setHoveredTab(null)}
-              className={`relative px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 z-10 ${active === t ? "text-white" : "text-slate-400 hover:text-slate-200"
-                }`}
+              className={`relative px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 z-10 ${
+                active === t ? "text-white" : "text-slate-400 hover:text-slate-200"
+              }`}
             >
               {t}
             </button>
@@ -163,7 +163,6 @@ function Navbar({ active, setActive, onTabClick }) {
           />
         </div>
 
-        {/* Empty right spacer */}
         <div className="w-8" />
       </div>
     </motion.nav>
@@ -172,16 +171,23 @@ function Navbar({ active, setActive, onTabClick }) {
 
 // ── Hero (Dashboard) ─────────────────────────────────────────────────────────
 const HERO_STATS = [
-  { label: "Active Leads", value: 1284, suffix: "", color: "#3B82F6" },
-  { label: "Revenue Pipeline", value: 4, prefix: "$", suffix: ".2M", color: "#8B5CF6" },
-  { label: "Win Rate", value: 68, suffix: "%", color: "#06B6D4" },
-  { label: "Avg Deal Size", value: 42, prefix: "$", suffix: "k", color: "#10B981" },
+  { label: "Total Leads", value: 1284, suffix: "", color: "#3B82F6" },
+  { label: "Emails Sent", value: 1020, suffix: "", color: "#8B5CF6" },
+  { label: "Emails Opened", value: 650, suffix: "", color: "#06B6D4" },
+  { label: "Open Rate", value: 64, suffix: "%", color: "#10B981" },
 ];
 
-function Hero({ onScrollToForm, id = "dashboard" }) {
+function Hero({ onScrollToForm, id = "dashboard", stats }) {
+  // Use real stats if provided, else fallback to placeholder
+  const displayStats = stats ? [
+    { label: "Total Leads", value: stats.totalLeads || 0, suffix: "", color: "#3B82F6" },
+    { label: "Emails Sent", value: stats.emailsSent || 0, suffix: "", color: "#8B5CF6" },
+    { label: "Emails Opened", value: stats.emailsOpened || 0, suffix: "", color: "#06B6D4" },
+    { label: "Open Rate", value: stats.openRate || 0, suffix: "%", color: "#10B981" },
+  ] : HERO_STATS;
+
   return (
     <section id={id} className="relative min-h-screen flex flex-col items-center justify-start px-6 pt-32 pb-10 overflow-hidden">
-      {/* Orbs */}
       {[
         { w: 600, h: 600, x: -100, y: -100, color: "rgba(59,130,246,0.15)" },
         { w: 500, h: 500, x: "60%", y: "10%", color: "rgba(139,92,246,0.12)" },
@@ -203,7 +209,7 @@ function Hero({ onScrollToForm, id = "dashboard" }) {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-medium mb-8"
         >
           <Sparkles className="w-3.5 h-3.5" />
-          Lead management for modern teams
+          Smart pipeline & deal tracking
         </motion.div>
 
         <motion.h1
@@ -211,9 +217,9 @@ function Hero({ onScrollToForm, id = "dashboard" }) {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="text-5xl sm:text-7xl font-bold tracking-tight mb-6 leading-none"
         >
-          <span className="text-white">Lead</span>
+          <span className="text-white">LeadTrack</span>{" "}
           <span style={{ background: "linear-gradient(135deg,#3B82F6,#8B5CF6,#06B6D4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Track
+            AI
           </span>
         </motion.h1>
 
@@ -240,9 +246,8 @@ function Hero({ onScrollToForm, id = "dashboard" }) {
           </button>
         </motion.div>
 
-        {/* Stats row */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          {HERO_STATS.map((s, i) => (
+          {displayStats.map((s, i) => (
             <motion.div
               key={s.label}
               initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
@@ -366,53 +371,11 @@ function PipelineSection({ id = "pipeline" }) {
   );
 }
 
-// ── Lead Form ─────────────────────────────────────────────────────────────────
-const STEPS = ["Contact", "Company", "Deal"];
-
-function LeadForm({ onAddLead }) {
-  const [step, setStep] = useState(0);
-  const [done, setDone] = useState(false);
-  const [form, setForm] = useState({
-    name: "", email: "", phone: "",
-    company: "", source: "Website",
-    value: "", status: "new",
-  });
-  const [errors, setErrors] = useState({});
-
+// ── Field component (OUTSIDE LeadForm to prevent cursor jump) ──────────────
+const Field = ({ label, name, type = "text", icon: Icon, options, form, setForm, errors, setErrors }) => {
   const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
 
-  const validate = () => {
-    const e = {};
-    if (step === 0) {
-      if (!form.name.trim()) e.name = "Name required";
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
-    }
-    if (step === 1) {
-      if (!form.company.trim()) e.company = "Company required";
-    }
-    if (step === 2) {
-      if (!form.value || isNaN(+form.value)) e.value = "Deal value required";
-    }
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const next = () => { if (validate()) setStep(s => s + 1); };
-  const back = () => setStep(s => s - 1);
-
-  const submit = () => {
-    if (!validate()) return;
-    onAddLead({
-      id: Date.now(),
-      name: form.name, email: form.email, company: form.company,
-      value: +form.value, status: form.status, source: form.source,
-      score: rand(60, 98), date: new Date().toISOString().split("T")[0],
-    });
-    setDone(true);
-    setTimeout(() => { setDone(false); setStep(0); setForm({ name: "", email: "", phone: "", company: "", source: "Website", value: "", status: "new" }); }, 2800);
-  };
-
-  const Field = ({ label, name, type = "text", icon: Icon, options }) => (
+  return (
     <div className="relative">
       <label className="block text-xs font-medium text-slate-400 mb-1.5">{label}</label>
       {options ? (
@@ -426,6 +389,15 @@ function LeadForm({ onAddLead }) {
           </select>
           <ChevronDown className="absolute right-3 top-3 w-4 h-4 text-slate-500 pointer-events-none" />
         </div>
+      ) : type === 'textarea' ? (
+        <textarea
+          value={form[name]}
+          onChange={e => { set(name, e.target.value); setErrors(p => ({ ...p, [name]: "" })); }}
+          placeholder={label}
+          rows={4}
+          className={`w-full bg-white/[0.04] border rounded-xl py-2.5 text-sm text-white placeholder-slate-600 focus:outline-none transition-all resize-none ${errors[name] ? "border-red-500/50 focus:border-red-500" : "border-white/[0.08] focus:border-blue-500/50 focus:bg-white/[0.07]"
+            } ${Icon ? "pl-10 pr-4" : "px-4"}`}
+        />
       ) : (
         <div className="relative">
           {Icon && <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />}
@@ -442,6 +414,73 @@ function LeadForm({ onAddLead }) {
       {errors[name] && <p className="mt-1 text-xs text-red-400">{errors[name]}</p>}
     </div>
   );
+};
+
+// ── Lead Form ─────────────────────────────────────────────────────────────────
+const STEPS = ["Contact", "Company", "Requirement"];
+
+function LeadForm({ onAddLead, onLeadAdded }) {
+  const [step, setStep] = useState(0);
+  const [done, setDone] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    company: "",
+    requirement: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const set = (k, v) => setForm(p => ({ ...p, [k]: v }));
+
+  const validate = () => {
+    const e = {};
+    if (step === 0) {
+      if (!form.name.trim()) e.name = "Name required";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) e.email = "Valid email required";
+    }
+    if (step === 1) {
+      if (!form.company.trim()) e.company = "Company required";
+    }
+    if (step === 2) {
+      if (!form.requirement.trim()) e.requirement = "Requirement required";
+    }
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
+
+  const next = () => { if (validate()) setStep(s => s + 1); };
+  const back = () => setStep(s => s - 1);
+
+  const submit = async () => {
+    if (!validate()) return;
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone || '',
+          company: form.company || '',
+          requirement: form.requirement,
+        }),
+      });
+      if (res.ok) {
+        setDone(true);
+        if (onLeadAdded) onLeadAdded(); // refresh leads list
+        setTimeout(() => {
+          setDone(false);
+          setStep(0);
+          setForm({ name: "", email: "", phone: "", company: "", requirement: "" });
+        }, 2800);
+      } else {
+        console.error('Submission failed');
+      }
+    } catch (err) {
+      console.error('Error submitting lead:', err);
+    }
+  };
 
   return (
     <section id="lead-form" className="px-6 py-16 max-w-xl mx-auto">
@@ -484,19 +523,22 @@ function LeadForm({ onAddLead }) {
               <motion.div key={step}
                 initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.25 }} className="space-y-4">
-                {step === 0 && (<>
-                  <Field label="Full Name" name="name" icon={User} />
-                  <Field label="Email" name="email" type="email" icon={Mail} />
-                  <Field label="Phone (optional)" name="phone" type="tel" icon={Phone} />
-                </>)}
-                {step === 1 && (<>
-                  <Field label="Company" name="company" icon={Building} />
-                  <Field label="Lead Source" name="source" options={["Website", "LinkedIn", "Referral", "Cold Email", "Demo", "Other"]} />
-                </>)}
-                {step === 2 && (<>
-                  <Field label="Deal Value (USD)" name="value" type="number" icon={DollarSign} />
-                  <Field label="Initial Status" name="status" options={["new", "qualified", "proposal", "negotiation"]} />
-                </>)}
+                {step === 0 && (
+                  <>
+                    <Field label="Full Name" name="name" icon={User} form={form} setForm={setForm} errors={errors} setErrors={setErrors} />
+                    <Field label="Email" name="email" type="email" icon={Mail} form={form} setForm={setForm} errors={errors} setErrors={setErrors} />
+                    <Field label="Phone (optional)" name="phone" type="tel" icon={Phone} form={form} setForm={setForm} errors={errors} setErrors={setErrors} />
+                  </>
+                )}
+                {step === 1 && (
+                  <>
+                    <Field label="Company" name="company" icon={Building} form={form} setForm={setForm} errors={errors} setErrors={setErrors} />
+                    {/* No source field – removed per requirements */}
+                  </>
+                )}
+                {step === 2 && (
+                  <Field label="Requirement / Message" name="requirement" type="textarea" form={form} setForm={setForm} errors={errors} setErrors={setErrors} />
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -702,7 +744,34 @@ function Footer() {
 export default function App() {
   const [leads, setLeads] = useState(INITIAL_LEADS);
   const [navActive, setNavActive] = useState("Dashboard");
-  const formRef = useRef(null);
+  const [stats, setStats] = useState({
+    totalLeads: 0,
+    emailsSent: 0,
+    emailsOpened: 0,
+    openRate: 0,
+  });
+
+  // Fetch real stats from backend
+  const fetchStats = () => {
+    fetch('/api/stats')
+      .then(res => res.json())
+      .then(data => setStats(data))
+      .catch(err => console.error('Error fetching stats:', err));
+  };
+
+  // Fetch leads from backend
+  const fetchLeads = () => {
+    fetch('/api/leads')
+      .then(res => res.json())
+      .then(data => setLeads(data))
+      .catch(err => console.error('Error fetching leads:', err));
+  };
+
+  // On mount, fetch stats and leads
+  useEffect(() => {
+    fetchStats();
+    fetchLeads();
+  }, []);
 
   const addLead = (lead) => setLeads(p => [lead, ...p]);
   const deleteLead = (id) => setLeads(p => p.filter(l => l.id !== id));
@@ -768,10 +837,10 @@ export default function App() {
 
       <div className="relative z-10">
         <Navbar active={navActive} setActive={setNavActive} onTabClick={scrollToSection} />
-        <Hero onScrollToForm={scrollToForm} />
+        <Hero onScrollToForm={scrollToForm} stats={stats} />
         <Analytics />
         <PipelineSection />
-        <LeadForm onAddLead={addLead} />
+        <LeadForm onAddLead={addLead} onLeadAdded={fetchLeads} />
         <LeadsTable leads={leads} onDelete={deleteLead} />
         <Footer />
       </div>
