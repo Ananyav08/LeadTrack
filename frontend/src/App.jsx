@@ -42,8 +42,7 @@ export default function App() {
       clicked: false
     };
     setLeads([newLead, ...leads]);
-    
-    setMsg(`🎯 Pipeline pipeline initialized successfully via secure tracking relay: ${senderEmail}`);
+    setMsg(`🎯 Pipeline initialized successfully via secure tracking relay: ${senderEmail}`);
     setFormData({ name: '', email: '', phone: '', company: '', requirement: '' });
     setTimeout(() => setMsg(''), 5000);
   };
@@ -62,166 +61,240 @@ export default function App() {
     return true;
   });
 
-  // Pure Glassmorphic Stylesheet object
-  const glassPanel = {
-    background: 'rgba(255, 255, 255, 0.03)',
-    backdropFilter: 'blur(20px)',
-    WebkitBackdropFilter: 'blur(20px)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
-    boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
-  };
-
   return (
-    <div style={{ padding: '40px 24px', minHeight: '100vh', background: '#0a0a0f', color: '#f3f4f6', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-      
-      {/* Dynamic Injection of Premium Claude-style Custom CSS States */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-[#0e0e1a] to-slate-900 text-slate-100 p-6 font-sans antialiased">
       <style>{`
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-slide-up {
+          animation: fadeSlideUp 0.4s ease-out forwards;
+        }
+        .glass {
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(16px) saturate(180%);
+          -webkit-backdrop-filter: blur(16px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.06);
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        .glass-hover:hover {
+          background: rgba(255, 255, 255, 0.07);
+          border-color: rgba(255, 255, 255, 0.12);
+          transition: all 0.3s ease;
+        }
         .premium-input {
-          background: rgba(255, 255, 255, 0.02) !important;
-          border: 1px solid rgba(255, 255, 255, 0.08) !important;
-          color: #f3f4f6 !important;
-          padding: 14px 16px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 12px;
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          padding: 12px 16px;
+          color: #f1f5f9;
           outline: none;
+          transition: all 0.2s;
+          width: 100%;
         }
         .premium-input:focus {
-          border-color: #818cf8 !important;
-          background: rgba(255, 255, 255, 0.05) !important;
-          box-shadow: 0 0 16px rgba(129, 140, 248, 0.15) !important;
+          border-color: #818cf8;
+          background: rgba(255, 255, 255, 0.06);
+          box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.1);
+        }
+        .premium-input::placeholder {
+          color: #64748b;
+          font-weight: 400;
         }
         .premium-btn {
-          background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-          color: #ffffff;
+          background: linear-gradient(135deg, #6366f1, #4f46e5);
           border: 1px solid rgba(255, 255, 255, 0.1);
+          color: #fff;
+          font-weight: 600;
+          border-radius: 12px;
+          padding: 12px 20px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 16px rgba(99, 102, 241, 0.25);
         }
         .premium-btn:hover:not(:disabled) {
           transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
-          filter: brightness(1.1);
+          box-shadow: 0 8px 28px rgba(99, 102, 241, 0.4);
+          filter: brightness(1.08);
         }
         .premium-btn:active:not(:disabled) {
           transform: translateY(0);
         }
-        .premium-table-row {
-          transition: background 0.2s ease;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        .premium-btn:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+          transform: none !important;
+          box-shadow: none !important;
         }
-        .premium-table-row:hover {
-          background: rgba(255, 255, 255, 0.02) !important;
+        .tab-btn {
+          background: transparent;
+          border: none;
+          padding: 8px 18px;
+          border-radius: 999px;
+          font-weight: 600;
+          font-size: 13px;
+          color: #94a3b8;
+          transition: all 0.2s;
+          cursor: pointer;
+        }
+        .tab-btn.active {
+          background: rgba(255, 255, 255, 0.08);
+          color: #f1f5f9;
+          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+        .tab-btn:hover:not(.active) {
+          color: #e2e8f0;
+          background: rgba(255, 255, 255, 0.04);
+        }
+        .status-badge {
+          display: inline-block;
+          padding: 4px 14px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.3px;
+          border: 1px solid transparent;
+        }
+        .status-badge.opened {
+          background: rgba(245, 158, 11, 0.08);
+          border-color: rgba(245, 158, 11, 0.2);
+          color: #fbbf24;
+        }
+        .status-badge.unread {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.06);
+          color: #64748b;
+        }
+        .status-badge.clicked {
+          background: rgba(16, 185, 129, 0.08);
+          border-color: rgba(16, 185, 129, 0.2);
+          color: #34d399;
+        }
+        .status-badge.noclick {
+          background: rgba(255, 255, 255, 0.03);
+          border-color: rgba(255, 255, 255, 0.06);
+          color: #64748b;
+        }
+        .metric-card {
+          transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(255, 255, 255, 0.15);
+          background: rgba(255, 255, 255, 0.07);
         }
         ::-webkit-scrollbar {
           width: 6px;
           height: 6px;
         }
         ::-webkit-scrollbar-track {
-          background: rgba(0,0,0,0.1);
+          background: rgba(0,0,0,0.2);
+          border-radius: 99px;
         }
         ::-webkit-scrollbar-thumb {
           background: rgba(255,255,255,0.1);
           border-radius: 99px;
         }
+        ::-webkit-scrollbar-thumb:hover {
+          background: rgba(255,255,255,0.2);
+        }
       `}</style>
 
-      <div style={{ maxWidth: '1340px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '32px' }}>
-        
-        {/* Premium Glass Dashboard Header */}
-        <header style={{ ...glassPanel, padding: '28px 36px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px', borderRadius: '20px' }}>
+      <div className="max-w-7xl mx-auto space-y-6">
+
+        {/* Header */}
+        <header className="glass glass-hover rounded-2xl p-6 flex flex-wrap items-center justify-between gap-4 animate-fade-slide-up">
           <div>
-            <h1 style={{ fontSize: '34px', fontWeight: '800', margin: 0, letterSpacing: '-0.75px', background: 'linear-gradient(135deg, #ffffff 30%, #a5b4fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>LeadTrack Core</h1>
-            <p style={{ color: '#9ca3af', fontSize: '14px', marginTop: '6px', fontWeight: '500', opacity: 0.8 }}>High-Fidelity Interaction Tracking & Pipeline Management Matrix</p>
+            <h1 className="text-3xl font-extrabold bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent tracking-tight">
+              LeadTrack Core
+            </h1>
+            <p className="text-sm text-slate-400 font-medium mt-0.5">
+              High‑Fidelity Interaction Tracking &amp; Pipeline Management Matrix
+            </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(16, 185, 129, 0.06)', border: '1px solid rgba(16, 185, 129, 0.2)', padding: '10px 20px', borderRadius: '999px' }}>
-            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10b981', boxShadow: '0 0 12px #10b981' }}></span>
-            <span style={{ fontSize: '11px', fontWeight: '800', letterSpacing: '1.5px', textTransform: 'uppercase', color: '#10b981' }}>System Live</span>
+          <div className="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-full">
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-lg shadow-emerald-400/30"></span>
+            <span className="text-xs font-bold uppercase tracking-widest text-emerald-400">System Live</span>
           </div>
         </header>
 
-        {/* Primary Workspace Grid Split */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '32px' }}>
-          
-          {/* Glass Input Panel */}
-          <div style={{ ...glassPanel, padding: '32px', display: 'flex', flexDirection: 'column', gap: '24px', borderRadius: '20px' }}>
-            
-            {/* Identity Selector */}
-            <div style={{ background: 'rgba(99, 102, 241, 0.04)', border: '1px solid rgba(99, 102, 241, 0.15)', padding: '18px', borderRadius: '14px' }}>
-              <label style={{ fontSize: '11px', fontWeight: '800', color: '#a5b4fc', textTransform: 'uppercase', display: 'block', marginBottom: '12px', letterSpacing: '1px' }}>
-                ⚡ SMTP SENDER ARCHETYPE
+        {/* Main Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          {/* Form Panel */}
+          <div className="glass glass-hover rounded-2xl p-6 lg:col-span-1 animate-fade-slide-up" style={{ animationDelay: '0.05s' }}>
+            <div className="bg-indigo-500/5 border border-indigo-500/10 rounded-xl p-4 mb-6">
+              <label className="text-xs font-bold uppercase tracking-wider text-indigo-300 block mb-1">
+                ⚡ SMTP Sender Archetype
               </label>
-              <select 
-                value={senderEmail} 
+              <select
+                value={senderEmail}
                 onChange={(e) => setSenderEmail(e.target.value)}
-                className="premium-input"
-                style={{ width: '100%', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}
+                className="premium-input text-sm font-semibold cursor-pointer bg-slate-800/50"
               >
-                <option value="dispatch@leadtrack.io" style={{ background: '#0f0f15' }}>dispatch@leadtrack.io (Master Core)</option>
-                <option value="sales@leadtrack.io" style={{ background: '#0f0f15' }}>sales@leadtrack.io (Growth Desk)</option>
-                <option value="no-reply@leadtrack.io" style={{ background: '#0f0f15' }}>no-reply@leadtrack.io (Automated Bot)</option>
+                <option value="dispatch@leadtrack.io" className="bg-slate-900">dispatch@leadtrack.io (Master Core)</option>
+                <option value="sales@leadtrack.io" className="bg-slate-900">sales@leadtrack.io (Growth Desk)</option>
+                <option value="no-reply@leadtrack.io" className="bg-slate-900">no-reply@leadtrack.io (Automated Bot)</option>
               </select>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-              <h2 style={{ fontSize: '20px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '10px', margin: 0 }}>
-                <span>📥</span> Capture Lead Entry
-              </h2>
-              <p style={{ color: '#9ca3af', fontSize: '13px', opacity: 0.8 }}>Ingest structural relational attributes securely into sandbox view.</p>
-            </div>
+            <h2 className="text-xl font-bold flex items-center gap-2 mb-2">
+              <span>📥</span> Capture Lead Entry
+            </h2>
+            <p className="text-sm text-slate-400 mb-5">Ingest structural relational attributes securely.</p>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            <form onSubmit={handleSubmit} className="space-y-3">
               <input type="text" placeholder="Full Name" required className="premium-input" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
               <input type="email" placeholder="Email Address" required className="premium-input" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
               <input type="text" placeholder="Phone Number" required className="premium-input" value={formData.phone} onChange={e => setFormData({ ...formData, phone: e.target.value })} />
               <input type="text" placeholder="Company Name (Optional)" className="premium-input" value={formData.company} onChange={e => setFormData({ ...formData, company: e.target.value })} />
-              <textarea placeholder="Operational Scope / Customer Intent Details..." required className="premium-input" style={{ height: '105px', resize: 'none', lineHeight: '1.5' }} value={formData.requirement} onChange={e => setFormData({ ...formData, requirement: e.target.value })} />
-              
-              <button type="submit" className="premium-btn" style={{ marginTop: '6px', padding: '14px', borderRadius: '12px', fontWeight: '700', fontSize: '14px', letterSpacing: '0.5px' }}>
+              <textarea placeholder="Operational Scope / Customer Intent Details..." required className="premium-input resize-none h-24" value={formData.requirement} onChange={e => setFormData({ ...formData, requirement: e.target.value })} />
+              <button type="submit" className="premium-btn w-full">
                 Execute Pipeline Route
               </button>
             </form>
 
             {msg && (
-              <div style={{ padding: '14px 16px', background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.2)', color: '#10b981', fontSize: '13px', borderRadius: '12px', fontWeight: '600', lineHeight: '1.5' }}>
+              <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm rounded-xl font-medium animate-fade-slide-up">
                 {msg}
               </div>
             )}
           </div>
 
-          {/* Metrics Matrix Grid */}
-          <div style={{ gridColumn: 'span 2', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+          {/* Metrics Grid (spans 2 columns on large screens) */}
+          <div className="lg:col-span-2 grid grid-cols-2 gap-4 animate-fade-slide-up" style={{ animationDelay: '0.1s' }}>
             {[
-              { label: 'Total Leads Captured', val: stats.totalLeads, icon: '👥', color: '#6366f1', desc: 'Ingested records count' },
-              { label: 'Automated Emails Sent', val: stats.emailsSent, icon: '✉️', color: '#3b82f6', desc: 'Dispatched message relays' },
-              { label: 'Verified Email Opens', val: stats.emailsOpened, icon: '👁️', color: '#f59e0b', desc: 'Tracking pixel executions' },
-              { label: 'Trackable Link Clicks', val: stats.linksClicked, icon: '🔗', color: '#10b981', desc: 'Hyperlink callback triggers' },
-              { label: 'Global Open Rate', val: stats.openRate, icon: '📊', color: '#ec4899', desc: 'Asynchronous open conversion' },
-              { label: 'Global Click Rate', val: stats.clickRate, icon: '📈', color: '#f43f5e', desc: 'Interaction click efficiency' }
-            ].map((card, i) => (
-              <div key={i} style={{ ...glassPanel, borderTop: `3px solid ${card.color}`, padding: '24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '145px', borderRadius: '16px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                    <span style={{ fontSize: '11px', fontWeight: '800', letterSpacing: '0.75px', textTransform: 'uppercase', color: '#9ca3af' }}>{card.label}</span>
-                    <span style={{ fontSize: '11px', color: '#6b7280' }}>{card.desc}</span>
+              { label: 'Total Leads', value: stats.totalLeads, icon: '👥', desc: 'Ingested records' },
+              { label: 'Emails Sent', value: stats.emailsSent, icon: '✉️', desc: 'Dispatched relays' },
+              { label: 'Email Opens', value: stats.emailsOpened, icon: '👁️', desc: 'Pixel executions' },
+              { label: 'Link Clicks', value: stats.linksClicked, icon: '🔗', desc: 'Callback triggers' },
+              { label: 'Open Rate', value: stats.openRate, icon: '📊', desc: 'Open conversion' },
+              { label: 'Click Rate', value: stats.clickRate, icon: '📈', desc: 'Click efficiency' }
+            ].map((item, idx) => (
+              <div key={idx} className="glass glass-hover metric-card rounded-2xl p-5 flex flex-col justify-between border-t-2 border-indigo-500/30">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{item.label}</span>
+                    <p className="text-[10px] text-slate-500 mt-0.5">{item.desc}</p>
                   </div>
-                  <span style={{ fontSize: '18px', background: 'rgba(255,255,255,0.03)', padding: '6px 8px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>{card.icon}</span>
+                  <span className="text-xl opacity-80">{item.icon}</span>
                 </div>
-                <span style={{ fontSize: '44px', fontWeight: '800', color: '#ffffff', letterSpacing: '-1.5px', lineHeight: '1' }}>{card.val}</span>
+                <span className="text-4xl font-black text-white tracking-tight mt-2">{item.value}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Premium Data Logs Engine */}
-        <div style={{ ...glassPanel, overflow: 'hidden', display: 'flex', flexDirection: 'column', borderRadius: '20px' }}>
-          <div style={{ padding: '28px 32px', borderBottom: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+        {/* Data Logs Engine */}
+        <div className="glass glass-hover rounded-2xl overflow-hidden animate-fade-slide-up" style={{ animationDelay: '0.15s' }}>
+          {/* Header with Tabs */}
+          <div className="p-6 border-b border-white/5 flex flex-wrap items-center justify-between gap-4">
             <div>
-              <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#ffffff', margin: 0 }}>Relational Log Monitor</h2>
-              <p style={{ color: '#9ca3af', fontSize: '13px', marginTop: '4px', opacity: 0.8 }}>Simulate recipient webhook actions to stress-test your dynamic UI state machine.</p>
+              <h2 className="text-xl font-bold text-white">Relational Log Monitor</h2>
+              <p className="text-sm text-slate-400 mt-0.5">Simulate recipient webhook actions to stress‑test your dynamic UI state machine.</p>
             </div>
-            
-            {/* Claude-Style Navigation Filter Tabs */}
-            <div style={{ display: 'flex', gap: '6px', background: 'rgba(0,0,0,0.25)', padding: '4px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <div className="flex items-center gap-1 bg-slate-800/40 p-1 rounded-full border border-white/5">
               {[
                 { id: 'all', label: 'All Records', count: leads.length },
                 { id: 'opened', label: 'Opened', count: leads.filter(l => l.opened).length },
@@ -229,76 +302,76 @@ export default function App() {
               ].map((tab) => (
                 <button
                   key={tab.id}
+                  className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
                   onClick={() => setActiveTab(tab.id)}
-                  style={{
-                    padding: '8px 16px', fontSize: '12px', fontWeight: '700', borderRadius: '8px', border: 'none', cursor: 'pointer', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-                    background: activeTab === tab.id ? 'rgba(255,255,255,0.06)' : 'transparent',
-                    color: activeTab === tab.id ? '#ffffff' : '#9ca3af'
-                  }}
                 >
-                  {tab.label} <span style={{ marginLeft: '4px', opacity: 0.4, fontSize: '11px' }}>{tab.count}</span>
+                  {tab.label} <span className="text-xs opacity-40 ml-1">{tab.count}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          <div style={{ width: '100%', overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '14px' }}>
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-slate-300">
               <thead>
-                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.01)' }}>
-                  <th style={{ padding: '18px 24px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#9ca3af', letterSpacing: '1px' }}>Lead Identifiers</th>
-                  <th style={{ padding: '18px 24px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#9ca3af', letterSpacing: '1px' }}>Operational Scope</th>
-                  <th style={{ padding: '18px 24px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#9ca3af', letterSpacing: '1px', textAlign: 'center' }}>Tracking Pixel</th>
-                  <th style={{ padding: '18px 24px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#9ca3af', letterSpacing: '1px', textAlign: 'center' }}>Redirect Link</th>
-                  <th style={{ padding: '18px 24px', fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: '#9ca3af', letterSpacing: '1px', textAlign: 'right' }}>Asynchronous Testing Actions</th>
+                <tr className="border-b border-white/5 bg-white/5">
+                  <th className="px-6 py-4 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">Lead Identifiers</th>
+                  <th className="px-6 py-4 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400">Operational Scope</th>
+                  <th className="px-6 py-4 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400">Tracking Pixel</th>
+                  <th className="px-6 py-4 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400">Redirect Link</th>
+                  <th className="px-6 py-4 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400">Async Actions</th>
                 </tr>
               </thead>
-              <tbody style={{ verticalAlign: 'middle' }}>
+              <tbody>
                 {filteredLeads.length === 0 ? (
                   <tr>
-                    <td colSpan="5" style={{ padding: '48px', textAlign: 'center', color: '#6b7280', fontSize: '14px', fontWeight: '600' }}>
-                      No pipeline logs correspond with the current viewport filters.
+                    <td colSpan="5" className="px-6 py-12 text-center text-slate-500 font-medium">
+                      No pipeline logs match the current viewport filters.
                     </td>
                   </tr>
                 ) : (
-                  filteredLeads.map((l) => (
-                    <tr key={l.id} className="premium-table-row">
-                      <td style={{ padding: '20px 24px' }}>
-                        <div style={{ fontWeight: '700', color: '#ffffff', fontSize: '15px' }}>{l.name}</div>
-                        <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '4px' }}>{l.email} · {l.phone}</div>
-                        <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace', marginTop: '6px' }}>ID-REF: {l.timestamp}</div>
+                  filteredLeads.map((lead) => (
+                    <tr key={lead.id} className="border-b border-white/5 hover:bg-white/5 transition">
+                      <td className="px-6 py-4">
+                        <div className="font-semibold text-white">{lead.name}</div>
+                        <div className="text-xs text-slate-400">{lead.email} · {lead.phone}</div>
+                        <div className="text-[10px] text-slate-600 font-mono mt-1">ID‑REF: {lead.timestamp}</div>
                       </td>
-                      <td style={{ padding: '20px 24px', maxWidth: '300px' }}>
-                        <div style={{ fontSize: '13px', color: '#e5e7eb', lineHeight: '1.4' }}>"{l.requirement}"</div>
-                        {l.company && (
-                          <span style={{ fontSize: '9px', fontWeight: '800', letterSpacing: '0.5px', textTransform: 'uppercase', background: 'rgba(99, 102, 241, 0.1)', border: '1px solid rgba(99, 102, 241, 0.2)', padding: '3px 8px', borderRadius: '4px', color: '#a5b4fc', marginTop: '8px', display: 'inline-block' }}>
-                            🏢 {l.company}
+                      <td className="px-6 py-4 max-w-[220px]">
+                        <div className="text-sm text-slate-200 line-clamp-2">"{lead.requirement}"</div>
+                        {lead.company && (
+                          <span className="inline-block mt-1 text-[10px] font-bold uppercase tracking-wider bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded">
+                            🏢 {lead.company}
                           </span>
                         )}
                       </td>
-                      <td style={{ padding: '20px 24px', textAlign: 'center' }}>
-                        <span style={{ display: 'inline-block', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid',
-                          background: l.opened ? 'rgba(245, 158, 11, 0.06)' : 'rgba(255,255,255,0.02)',
-                          borderColor: l.opened ? 'rgba(245, 158, 11, 0.2)' : 'rgba(255,255,255,0.05)',
-                          color: l.opened ? '#f59e0b' : '#6b7280' }}>
-                          {l.opened ? '⚠️ Open Detected' : 'Unread'}
+                      <td className="px-6 py-4 text-center">
+                        <span className={`status-badge ${lead.opened ? 'opened' : 'unread'}`}>
+                          {lead.opened ? '⚠️ Open Detected' : 'Unread'}
                         </span>
                       </td>
-                      <td style={{ padding: '20px 24px', textAlign: 'center' }}>
-                        <span style={{ display: 'inline-block', padding: '6px 12px', borderRadius: '6px', fontSize: '11px', fontWeight: '800', border: '1px solid',
-                          background: l.clicked ? 'rgba(16, 185, 129, 0.06)' : 'rgba(255,255,255,0.02)',
-                          borderColor: l.clicked ? 'rgba(16, 185, 129, 0.2)' : 'rgba(255,255,255,0.05)',
-                          color: l.clicked ? '#10b981' : '#6b7280' }}>
-                          {l.clicked ? '✅ Click Intercepted' : 'No Click'}
+                      <td className="px-6 py-4 text-center">
+                        <span className={`status-badge ${lead.clicked ? 'clicked' : 'noclick'}`}>
+                          {lead.clicked ? '✅ Click Intercepted' : 'No Click'}
                         </span>
                       </td>
-                      <td style={{ padding: '20px 24px', textAlign: 'right' }}>
-                        <div style={{ display: 'flex', justifyContent: 'end', gap: '10px' }}>
-                          <button onClick={() => simulateOpen(l.id)} disabled={l.opened} className="premium-btn" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: '700', borderRadius: '6px', border: 'none', background: l.opened ? 'rgba(255,255,255,0.03)' : 'linear-gradient(135deg, #f59e0b, #d97706)', color: l.opened ? '#6b7280' : '#ffffff', boxShadow: l.opened ? 'none' : '0 4px 12px rgba(245, 158, 11, 0.15)' }}>
-                            {l.opened ? 'Pixel Live' : 'Trigger Open'}
+                      <td className="px-6 py-4 text-right">
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => simulateOpen(lead.id)}
+                            disabled={lead.opened}
+                            className="premium-btn text-xs px-4 py-1.5 rounded-lg"
+                          >
+                            {lead.opened ? '✓ Pixel Live' : 'Trigger Open'}
                           </button>
-                          <button onClick={() => simulateClick(l.id)} disabled={l.clicked} className="premium-btn" style={{ padding: '8px 14px', fontSize: '12px', fontWeight: '700', borderRadius: '6px', border: 'none', background: l.clicked ? 'rgba(255,255,255,0.03)' : 'linear-gradient(135deg, #10b981, #059669)', color: l.clicked ? '#6b7280' : '#ffffff', boxShadow: l.clicked ? 'none' : '0 4px 12px rgba(16, 185, 129, 0.15)' }}>
-                            {l.clicked ? 'Link Live' : 'Trigger Click'}
+                          <button
+                            onClick={() => simulateClick(lead.id)}
+                            disabled={lead.clicked}
+                            className="premium-btn text-xs px-4 py-1.5 rounded-lg"
+                            style={{ background: lead.clicked ? 'rgba(255,255,255,0.05)' : 'linear-gradient(135deg, #10b981, #059669)' }}
+                          >
+                            {lead.clicked ? '✓ Link Live' : 'Trigger Click'}
                           </button>
                         </div>
                       </td>
