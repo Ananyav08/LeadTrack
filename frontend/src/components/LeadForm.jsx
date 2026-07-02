@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+const API_URL = "https://leadtrack-production-92b6.up.railway.app";
 
 const FIELDS = [
   { id: 'name',        label: 'Full Name',     type: 'text',     placeholder: 'Jane Smith',              required: true  },
@@ -21,7 +22,8 @@ export default function LeadForm() {
     setStatus('loading')
     setMessage('')
     try {
-      const res = await fetch('/api/leads', {
+      
+      const res = await fetch(`${API_URL}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
