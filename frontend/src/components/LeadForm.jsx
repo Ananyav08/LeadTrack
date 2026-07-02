@@ -22,7 +22,7 @@ export default function LeadForm() {
     setStatus('loading')
     setMessage('')
     try {
-      
+      console.log("API_URL =", API_URL);
       const res = await fetch(`${API_URL}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
