@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-const API_URL = "https://leadtrack-production-92b6.up.railway.app";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const FIELDS = [
   { id: 'name',        label: 'Full Name',     type: 'text',     placeholder: 'Jane Smith',              required: true  },
@@ -22,12 +22,13 @@ export default function LeadForm() {
     setStatus('loading')
     setMessage('')
     try {
-      console.log("API_URL =", API_URL);
+    
       const res = await fetch(`${API_URL}/api/leads`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       })
+      
       if (!res.ok) {
         const err = await res.json().catch(() => ({}))
         throw new Error(err.detail || 'Server error')
